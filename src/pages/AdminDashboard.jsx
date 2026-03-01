@@ -6,7 +6,7 @@ import {
     addHostel, addRoom, deleteDocument, updateDocument, deleteBookingRecord,
     banStudent, getHostelsByOwner, getRoomsByOwner, getBookingsByOwner
 } from '../utils/firebaseService';
-import { Plus, Trash2, Edit, X, Building, Building2, Home as HomeIcon, Users, BookOpen, LayoutDashboard, Search, TrendingUp } from 'lucide-react';
+import { Plus, Trash2, Edit, X, Building, Building2, Home as HomeIcon, Users, BookOpen, LayoutDashboard, Search, TrendingUp, Eye, ArrowLeft } from 'lucide-react';
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
@@ -245,6 +245,14 @@ const AdminDashboard = () => {
                 {/* Dashboard Header */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '48px' }}>
                     <div>
+                        <button
+                            onClick={() => navigate('/')}
+                            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '16px', padding: '8px 18px', borderRadius: '12px', background: '#f1f5f9', border: '1px solid #e2e8f0', color: '#475569', fontWeight: '700', fontSize: '14px', cursor: 'pointer', transition: 'all 0.2s' }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#eff6ff'; e.currentTarget.style.color = '#3b82f6'; e.currentTarget.style.borderColor = '#bfdbfe'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#475569'; e.currentTarget.style.borderColor = '#e2e8f0'; }}
+                        >
+                            <ArrowLeft size={16} /> Back to Home
+                        </button>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', fontWeight: '800', fontSize: '14px', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>
                             <LayoutDashboard size={18} /> {currentUser?.role === 'owner' ? 'Owner Performance' : 'Administrative Nexus'}
                         </div>
@@ -360,8 +368,9 @@ const AdminDashboard = () => {
                                                     <td style={{ padding: '20px', color: 'var(--primary)', fontWeight: '800' }}>₹{h.price}</td>
                                                     <td style={{ padding: '20px', borderRadius: '0 16px 16px 0' }}>
                                                         <div style={{ display: 'flex', gap: '10px' }}>
-                                                            <button onClick={() => startEditHostel(h)} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'white', color: 'var(--primary)', boxShadow: 'var(--shadow-sm)' }}><Edit size={16} /></button>
-                                                            <button onClick={() => deleteHostel(h.id)} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'white', color: 'var(--secondary)', boxShadow: 'var(--shadow-sm)' }}><Trash2 size={16} /></button>
+                                                            <button onClick={() => startEditHostel(h)} style={{ display: 'flex', alignItems: 'center', gap: '6px', height: '36px', padding: '0 14px', borderRadius: '10px', background: '#eff6ff', color: '#3b82f6', boxShadow: '0 2px 8px rgba(59,130,246,0.15)', border: '1px solid #bfdbfe', fontWeight: '700', fontSize: '13px', whiteSpace: 'nowrap' }}><Edit size={14} /> Edit</button>
+                                                            <button onClick={() => alert(`🏨 Hostel Info\n\nName: ${h.name}\nLocation: ${h.location}\nPrice: ₹${h.price}/mo\nDistance: ${h.distance}\nAmenities: ${(h.amenities || []).join(', ')}\nDescription: ${h.description || 'N/A'}`)} style={{ display: 'flex', alignItems: 'center', gap: '6px', height: '36px', padding: '0 14px', borderRadius: '10px', background: '#f0fdf4', color: '#16a34a', boxShadow: '0 2px 8px rgba(22,163,74,0.15)', border: '1px solid #bbf7d0', fontWeight: '700', fontSize: '13px', whiteSpace: 'nowrap' }}><Eye size={14} /> Info</button>
+                                                            <button onClick={() => deleteHostel(h.id)} style={{ display: 'flex', alignItems: 'center', gap: '6px', height: '36px', padding: '0 14px', borderRadius: '10px', background: '#fef2f2', color: '#ef4444', boxShadow: '0 2px 8px rgba(239,68,68,0.15)', border: '1px solid #fecaca', fontWeight: '700', fontSize: '13px', whiteSpace: 'nowrap' }}><Trash2 size={14} /> Delete</button>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -399,8 +408,9 @@ const AdminDashboard = () => {
                                                     </td>
                                                     <td style={{ padding: '20px', borderRadius: '0 16px 16px 0' }}>
                                                         <div style={{ display: 'flex', gap: '10px' }}>
-                                                            <button onClick={() => startEditRoom(r)} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'white', color: 'var(--primary)', boxShadow: 'var(--shadow-sm)' }}><Edit size={16} /></button>
-                                                            <button onClick={() => deleteRoom(r.id)} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'white', color: 'var(--secondary)', boxShadow: 'var(--shadow-sm)' }}><Trash2 size={16} /></button>
+                                                            <button onClick={() => startEditRoom(r)} style={{ display: 'flex', alignItems: 'center', gap: '6px', height: '36px', padding: '0 14px', borderRadius: '10px', background: '#eff6ff', color: '#3b82f6', boxShadow: '0 2px 8px rgba(59,130,246,0.15)', border: '1px solid #bfdbfe', fontWeight: '700', fontSize: '13px', whiteSpace: 'nowrap' }}><Edit size={14} /> Edit</button>
+                                                            <button onClick={() => { const h = hostels.find(x => x.id === r.hostelId); alert(`🛏️ Room Info\n\nHostel: ${h?.name || 'Unknown'}\nType: ${r.type}\nRent: ₹${r.price}/mo\nCapacity: ${r.capacity} persons\nAvailable: ${r.available} units`); }} style={{ display: 'flex', alignItems: 'center', gap: '6px', height: '36px', padding: '0 14px', borderRadius: '10px', background: '#f0fdf4', color: '#16a34a', boxShadow: '0 2px 8px rgba(22,163,74,0.15)', border: '1px solid #bbf7d0', fontWeight: '700', fontSize: '13px', whiteSpace: 'nowrap' }}><Eye size={14} /> Info</button>
+                                                            <button onClick={() => deleteRoom(r.id)} style={{ display: 'flex', alignItems: 'center', gap: '6px', height: '36px', padding: '0 14px', borderRadius: '10px', background: '#fef2f2', color: '#ef4444', boxShadow: '0 2px 8px rgba(239,68,68,0.15)', border: '1px solid #fecaca', fontWeight: '700', fontSize: '13px', whiteSpace: 'nowrap' }}><Trash2 size={14} /> Delete</button>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -446,15 +456,18 @@ const AdminDashboard = () => {
                                                         <button
                                                             onClick={() => deleteBooking(b.id)}
                                                             style={{
-                                                                width: '36px',
+                                                                display: 'flex', alignItems: 'center', gap: '6px',
                                                                 height: '36px',
+                                                                padding: '0 14px',
                                                                 borderRadius: '10px',
-                                                                background: 'white',
-                                                                color: 'var(--secondary)',
-                                                                boxShadow: 'var(--shadow-sm)'
+                                                                background: '#fef2f2',
+                                                                color: '#ef4444',
+                                                                boxShadow: '0 2px 8px rgba(239,68,68,0.15)',
+                                                                border: '1px solid #fecaca',
+                                                                fontWeight: '700', fontSize: '13px', whiteSpace: 'nowrap'
                                                             }}
                                                         >
-                                                            <Trash2 size={16} />
+                                                            <Trash2 size={14} /> Delete
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -487,8 +500,8 @@ const AdminDashboard = () => {
                                                         </span>
                                                     </td>
                                                     <td style={{ padding: '20px', borderRadius: '0 16px 16px 0' }}>
-                                                        <button onClick={() => deleteOwner(o.id)} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'white', color: 'var(--secondary)', boxShadow: 'var(--shadow-sm)' }}>
-                                                            <Trash2 size={16} />
+                                                        <button onClick={() => deleteOwner(o.id)} style={{ display: 'flex', alignItems: 'center', gap: '6px', height: '36px', padding: '0 14px', borderRadius: '10px', background: '#fef2f2', color: '#ef4444', boxShadow: '0 2px 8px rgba(239,68,68,0.15)', border: '1px solid #fecaca', fontWeight: '700', fontSize: '13px', whiteSpace: 'nowrap' }}>
+                                                            <Trash2 size={14} /> Delete
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -521,8 +534,8 @@ const AdminDashboard = () => {
                                                         <span className="badge badge-blue" style={{ background: 'white' }}>Active Member</span>
                                                     </td>
                                                     <td style={{ padding: '20px', borderRadius: '0 16px 16px 0' }}>
-                                                        <button onClick={() => deleteStudent(s.id)} style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'white', color: 'var(--secondary)', boxShadow: 'var(--shadow-sm)' }}>
-                                                            <Trash2 size={16} />
+                                                        <button onClick={() => deleteStudent(s.id)} style={{ display: 'flex', alignItems: 'center', gap: '6px', height: '36px', padding: '0 14px', borderRadius: '10px', background: '#fef2f2', color: '#ef4444', boxShadow: '0 2px 8px rgba(239,68,68,0.15)', border: '1px solid #fecaca', fontWeight: '700', fontSize: '13px', whiteSpace: 'nowrap' }}>
+                                                            <Trash2 size={14} /> Ban
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -539,10 +552,17 @@ const AdminDashboard = () => {
             {/* Modals */}
             {showHostelForm && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(15,23,42,0.6)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1100, padding: '24px', backdropFilter: 'blur(8px)' }}>
-                    <div className="card animate-fade" style={{ width: '100%', maxWidth: '700px', padding: '48px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '40px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '32px', alignItems: 'center' }}>
+                    <div className="card animate-fade" style={{ position: 'relative', width: '100%', maxWidth: '700px', padding: '48px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '40px' }}>
+                        <button
+                            onClick={() => { setShowHostelForm(false); setEditingHostelId(null); setNewHostel({ name: '', location: '', distance: '', price: '', description: '', amenities: '', images: '' }); }}
+                            style={{ position: 'absolute', top: '20px', right: '20px', background: '#111827', width: '40px', height: '40px', borderRadius: '50%', border: 'none', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 10, boxShadow: '0 4px 12px rgba(0,0,0,0.25)', transition: 'all 0.2s' }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#374151'; e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.35)'; e.currentTarget.style.transform = 'scale(1.08)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = '#111827'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.25)'; e.currentTarget.style.transform = 'scale(1)'; }}
+                        >
+                            <span style={{ color: 'white', fontSize: '20px', fontWeight: '700', lineHeight: 1, userSelect: 'none' }}>✕</span>
+                        </button>
+                        <div style={{ marginBottom: '32px' }}>
                             <h3 style={{ fontSize: '32px' }}>{editingHostelId ? 'Update Property' : 'Register Property'}</h3>
-                            <button onClick={() => { setShowHostelForm(false); setEditingHostelId(null); setNewHostel({ name: '', location: '', distance: '', price: '', description: '', amenities: '', images: '' }); }} style={{ background: 'var(--bg-subtle)', width: '44px', height: '44px', borderRadius: '12px' }}><X /></button>
                         </div>
                         <form onSubmit={handleSaveHostel} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                             <div>
@@ -590,10 +610,17 @@ const AdminDashboard = () => {
 
             {showRoomForm && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(15,23,42,0.6)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1100, padding: '24px', backdropFilter: 'blur(8px)' }}>
-                    <div className="card animate-fade" style={{ width: '100%', maxWidth: '600px', padding: '48px', borderRadius: '40px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '32px', alignItems: 'center' }}>
+                    <div className="card animate-fade" style={{ position: 'relative', width: '100%', maxWidth: '600px', padding: '48px', borderRadius: '40px' }}>
+                        <button
+                            onClick={() => { setShowRoomForm(false); setEditingRoomId(null); setNewRoom({ hostelId: '', type: '', price: '', capacity: '', available: '' }); }}
+                            style={{ position: 'absolute', top: '20px', right: '20px', background: '#111827', width: '40px', height: '40px', borderRadius: '50%', border: 'none', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 10, boxShadow: '0 4px 12px rgba(0,0,0,0.25)', transition: 'all 0.2s' }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#374151'; e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.35)'; e.currentTarget.style.transform = 'scale(1.08)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = '#111827'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.25)'; e.currentTarget.style.transform = 'scale(1)'; }}
+                        >
+                            <span style={{ color: 'white', fontSize: '20px', fontWeight: '700', lineHeight: 1, userSelect: 'none' }}>✕</span>
+                        </button>
+                        <div style={{ marginBottom: '32px' }}>
                             <h3 style={{ fontSize: '32px' }}>{editingRoomId ? 'Edit Configuration' : 'New Configuration'}</h3>
-                            <button onClick={() => { setShowRoomForm(false); setEditingRoomId(null); setNewRoom({ hostelId: '', type: '', price: '', capacity: '', available: '' }); }} style={{ background: 'var(--bg-subtle)', width: '44px', height: '44px', borderRadius: '12px' }}><X size={24} /></button>
                         </div>
                         <form onSubmit={handleSaveRoom} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                             <div>

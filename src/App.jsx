@@ -105,8 +105,34 @@ const Navbar = ({ user, onLogout }) => {
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button className="mobile-only glass" onClick={() => setIsOpen(!isOpen)} style={{ width: '48px', height: '48px', borderRadius: '12px', color: textColor }}>
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        <button
+          className="mobile-only"
+          onClick={() => setIsOpen(!isOpen)}
+          style={{
+            width: '48px',
+            height: '48px',
+            borderRadius: '12px',
+            background: '#111827',
+            border: 'none',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '5px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+            cursor: 'pointer',
+            transition: 'all 0.3s'
+          }}
+        >
+          {isOpen ? (
+            <span style={{ color: 'white', fontSize: '22px', fontWeight: '700', lineHeight: 1, userSelect: 'none' }}>✕</span>
+          ) : (
+            <>
+              <span style={{ display: 'block', width: '22px', height: '2.5px', background: 'white', borderRadius: '2px' }} />
+              <span style={{ display: 'block', width: '22px', height: '2.5px', background: 'white', borderRadius: '2px' }} />
+              <span style={{ display: 'block', width: '22px', height: '2.5px', background: 'white', borderRadius: '2px' }} />
+            </>
+          )}
         </button>
       </div>
 
